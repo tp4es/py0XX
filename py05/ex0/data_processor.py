@@ -95,7 +95,8 @@ def function_test(obj: DataProcessor, list: list) -> None:
     print(f"\nStart Testing {type(obj).__name__}")
     for data in list:
         try:
-            print(f"Trying to ingest Data: {data}, Valide DATA: {obj.validate(data)}")
+            print(f"Trying to ingest Data: {
+                data}, Valide DATA: {obj.validate(data)}")
             obj.ingest(data)
         except Exception as e:
             print(f"Error: {e}")
