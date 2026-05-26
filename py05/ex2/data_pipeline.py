@@ -97,10 +97,12 @@ class LogProcessor(DataProcessor):
             self._data.append(str(data))
             self._ingested += 1
 
+
 class ExportPlugin(Protocol):
     @abstractmethod
     def process_output(self, data: list[tuple[int, str]]) -> None:
         pass
+
 
 class DataStream():
     def __init__(self):
@@ -152,15 +154,13 @@ class DataStream():
                 data_list.clear()
 
 
-
 class ExportJson():
 
     def process_output(self, data):
-
-        print("{")
+        result = {}
         for t in data:
-            print(t)
-        print("}")
+            print(type(t[1]), t[1])
+        print(result)
 
 
 class ExportCsv():
