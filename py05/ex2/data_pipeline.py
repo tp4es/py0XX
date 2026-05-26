@@ -159,7 +159,7 @@ class ExportJson():
     def process_output(self, data):
         result = {}
         for t in data:
-            print(type(t[1]), t[1])
+            result[f"item{t[0]}"] = t[1]
         print(result)
 
 
