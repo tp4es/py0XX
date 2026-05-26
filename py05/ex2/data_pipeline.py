@@ -159,13 +159,16 @@ class ExportJson():
     def process_output(self, data):
         result = {}
         for t in data:
-            result[f"item{t[0]}"] = t[1]
+            result[f"item_{t[0]}"] = t[1]
         print(result)
 
 
 class ExportCsv():
     def process_output(self, data):
-        pass
+        result = []
+        for t in data:
+            result.append(f"{t[1]}")
+        print(",".join(result).strip('{').strip('}').replace("'", ""))
 
 
 def consume_processor(proc: DataProcessor, amount: int) -> None:
@@ -212,9 +215,11 @@ def data_pipe():
         print(f"Error: {e}")
     print("\n=== STATS ===")
     streamx.print_processors_stats()
-    print("\n=== Export 2 times ===")
+    print("\n=== Export 2 times: JSON ===")
     streamx.output_pipeline(2, json)
     streamx.print_processors_stats()
+    print("\n=== Export 2 times: CSV ===")
+    streamx.output_pipeline(2, csv)
 
 
 if __name__ == "__main__":
