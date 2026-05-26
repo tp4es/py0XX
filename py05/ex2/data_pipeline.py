@@ -97,6 +97,10 @@ class LogProcessor(DataProcessor):
             self._data.append(str(data))
             self._ingested += 1
 
+class ExportPlugin(Protocol):
+    @abstractmethod
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        pass
 
 class DataStream():
     def __init__(self):
@@ -126,9 +130,6 @@ class DataStream():
                     f"Has no processor avaible for {
                         (type(data).__name__).capitalize()}")
 
-    def output_pipeline(self, nb: int, plugin: ExportPlugin) -> None:
-        pass
-
     def print_processors_stats(self) -> None:
         for processor in self._processors:
             print(
@@ -137,9 +138,33 @@ class DataStream():
                 f"remaining: {len(processor._data)}"
             )
 
+    def output_pipeline(self, nb: int, plugin: ExportPlugin) -> None:
+        """Cada procesador, exporta nb elements"""
+        data_list = []
+        for proc in self._processors:
+            for _ in range(nb):
+                try:
+                    data_list.append(proc.output())
+                except ValueError:
+                    break
+            if data_list:
+                plugin.process_output(data_list)
+                data_list.clear()
 
-class ExportPlugin(Protocol):
-    def process_output(self, data: list[tuple[int, str]]) -> None:
+
+
+class ExportJson():
+
+    def process_output(self, data):
+
+        print("{")
+        for t in data:
+            print(t)
+        print("}")
+
+
+class ExportCsv():
+    def process_output(self, data):
         pass
 
 
@@ -153,14 +178,18 @@ def consume_processor(proc: DataProcessor, amount: int) -> None:
             break
 
 
-def data_stream():
-    data_list = [1.01, 2.02, [3.03, 4], "hello",
-                 ["hello", "world"], {"dict": "value"}, (1, 2)]
+def data_pipe():
+    data_list = [1.01, 2.02, [3.03, 4], "hello", 42, 21,
+                 ["hello", "world"], {"dict": "value"}, (1, 2),
+                 {"Warning": "SysError"}, {"SSHConnecting": "Fail"}
+                 ]
 
     streamx = DataStream()
     numeric = NumericProcessor()
     text = TextProcessor()
     log = LogProcessor()
+    json = ExportJson()
+    csv = ExportCsv()
 
     processors = [
         numeric,
@@ -183,17 +212,9 @@ def data_stream():
         print(f"Error: {e}")
     print("\n=== STATS ===")
     streamx.print_processors_stats()
-    print("\n**Consume elements from data processors: "
-          "Numeric 3, Text 2, Log 1.**")
-    consume_processor(numeric, 3)
-    consume_processor(text, 2)
-    consume_processor(log, 1)
-    print("\n=== Updated Stats ===")
+    print("\n=== Export 2 times ===")
+    streamx.output_pipeline(2, json)
     streamx.print_processors_stats()
-
-
-def data_pipe():
-    pass
 
 
 if __name__ == "__main__":
