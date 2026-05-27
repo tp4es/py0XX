@@ -1,14 +1,14 @@
 #!/usr/bin/env	python3
-from alchemy import create_air
-from alchemy import create_earth
-from ..elements import create_water, create_fire
+from alchemy.elements import create_air, create_earth
+from elements import create_water, create_fire
 
 elements = []
 
 
 def healing_potion() -> str:
     try:
-        elements.append(create_air(), create_earth())
+        elements.append(create_air())
+        elements.append(create_earth())
     except AttributeError as e:
         print(f"Error Found: {e}")
     return (
