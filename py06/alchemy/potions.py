@@ -24,6 +24,6 @@ def strength_potion() -> str:
     except AttributeError as e:
         print(f"Error found: {e}")
     return (
-        f"Strength potion brewed with '{elements[2]}' and"
-        f" '{elements[3]}'"
+        f"Strength potion brewed with '{elements[0]}' and"
+        f" '{elements[1]}'"
     )
