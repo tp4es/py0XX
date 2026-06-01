@@ -3,7 +3,7 @@
 from elements import create_water
 
 
-def ft_alembic_1() -> str:
+def ft_alembic_1() -> None:
     print(create_water())
 
 
