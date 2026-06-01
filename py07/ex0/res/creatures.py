@@ -8,14 +8,14 @@ class Creature(ABC):
 
     @property
     def name(self):
-        return self._name
+        return self._name.capitalize()
 
     @property
     def creature_type(self):
         return self._type
 
     def describe(self) -> str:
-        return f"{self.name} is a {self.creature_type}"
+        return f"{self.name} is a {self.creature_type} type"
 
     @abstractmethod
     def attack(self) -> str:
