@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from res.factorizer import FlameFactory, AquaFactory
+from ex0 import FlameFactory, AquaFactory
 import random
 
 
