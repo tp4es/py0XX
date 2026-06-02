@@ -1,4 +1,4 @@
-from ex0 import Creature
+from ex0.creatures import Creature
 from .capability import HealCapability, TransformCapability
 
 
@@ -11,7 +11,6 @@ class Sproutling(Creature, HealCapability):
 
     def heal(self, target: Creature) -> str:
         if isinstance(target, Sproutling):
-            target.health += 20
             return f"{self.name} heals {target.name} for 20 health!"
         return f"{self.name} cannot heal {target.name}."
 
@@ -42,8 +41,7 @@ class Shiftling(Creature, TransformCapability):
     def transform(self) -> str:
         self._transformed = True
         return (
-           f"{self.name} transforms into a powerful form!"
-           f"{self.attack()}")
+            f"{self.name} transforms into a powerful form!")
 
     def revert(self) -> str:
         self._transformed = False
@@ -63,8 +61,8 @@ class Morphagon(Creature, TransformCapability):
     def transform(self) -> str:
         self._transformed = True
         return (
-           f"{self.name} transforms into a draconic battle form!"
-           f"{self.attack()}")
+            f"{self.name} transforms into a draconic battle form!"
+            f"{self.attack()}")
 
     def revert(self) -> str:
         self._transformed = False
