@@ -3,7 +3,7 @@ from .capability import HealCapability, TransformCapability
 
 
 class Sproutling(Creature, HealCapability):
-    def __init__(self, name: str):
+    def __init__(self, name: str = "Sproutling"):
         super().__init__(name, "Grass")
 
     def attack(self) -> str:
@@ -16,7 +16,7 @@ class Sproutling(Creature, HealCapability):
 
 
 class Bloomelle(Creature, HealCapability):
-    def __init__(self, name: str):
+    def __init__(self, name: str = "Bloomelle"):
         super().__init__(name, "Grass/Fairy")
 
     def attack(self) -> str:
@@ -29,7 +29,7 @@ class Bloomelle(Creature, HealCapability):
 
 
 class Shiftling(Creature, TransformCapability):
-    def __init__(self, name: str):
+    def __init__(self, name: str = "Shiftling"):
         super().__init__(name, "Normal")
         self._transformed = False
 
@@ -49,7 +49,7 @@ class Shiftling(Creature, TransformCapability):
 
 
 class Morphagon(Creature, TransformCapability):
-    def __init__(self, name: str):
+    def __init__(self, name: str = "Morphagon"):
         super().__init__(name, "Normal/Dragon")
         self._transformed = False
 
