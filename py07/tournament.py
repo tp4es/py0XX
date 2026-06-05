@@ -2,12 +2,13 @@ from ex0.factorizer import AquaFactory, FlameFactory
 from ex0.creatures import Creature
 from ex1.factorizer import HealingCreatureFactory, TransformCreatureFactory
 from ex1.capability import HealCapability, TransformCapability
-from ex2.rules import BattleStrategy, NormalStrategy, AggresiveStrategy, DefensiveStrategy
-
+from ex2.rules import NormalStrategy, AggresiveStrategy, DefensiveStrategy
+from ex2.rules import BattleStrategy
 
 cards = []
 factories = [
-    AquaFactory, FlameFactory, HealingCreatureFactory, TransformCreatureFactory]
+    AquaFactory, FlameFactory, HealingCreatureFactory,
+    TransformCreatureFactory]
 
 
 def strategy_match(creature: Creature) -> BattleStrategy:
@@ -38,14 +39,14 @@ def create() -> tuple:
 def tournament() -> None:
     create()
     for i in range(len(cards)):
-        for j in range(i + 1, len(cards) - 1):
+        for j in range(i + 1, len(cards)):
             try:
-                print(f"\n=== !FIGHT! ===")
+                print("\n=== !FIGHT! ===")
                 print(cards[i][0].describe())
                 print("VS.")
                 print(cards[j][0].describe())
-                print(cards[i][1].act())
-                print(cards[j][1].act())
+                print(*cards[i][1].act(cards[i][0]))
+                print(*cards[j][1].act(cards[j][0]))
             except Exception as e:
                 print(f"Error: {e}")
 

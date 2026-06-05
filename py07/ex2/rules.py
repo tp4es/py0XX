@@ -6,51 +6,49 @@ import ex2.error_sys
 
 class BattleStrategy(ABC):
     @abstractmethod
-    def act() -> None:
+    def act(self, creature: Creature) -> str:
         pass
 
     @abstractmethod
-    def is_valid() -> bool:
+    def is_valid(self, creature: Creature) -> bool:
         pass
 
 
 class NormalStrategy(BattleStrategy):
-    def act(self) -> None:
-        if self.is_valid():
-            self.attack()
+    def act(self, creature: Creature) -> str:
+        if self.is_valid(creature):
+            return creature.attack()
 
-    def is_valid(self) -> bool:
-        try:
-            if isinstance(self, Creature):
-                return True
-        except Exception as e:
-            raise ex2.error_sys.CreatureStrategyError(self) from e
+    def is_valid(self, creature: Creature) -> bool:
+        return isinstance(creature, Creature)
 
 
 class AggresiveStrategy(BattleStrategy):
-    def act(self) -> None:
-        if self.is_valid():
-            self.transform()
-            self.attack()
-            self.revert()
-
-    def is_valid(self) -> bool:
+    def act(self, creature: Creature) -> str:
         try:
-            if isinstance(self, TransformCapability()):
-                return True
+            if self.is_valid(creature):
+                return (
+                    f"{creature.transform()}\n",
+                    f"{creature.attack()}\n",
+                    f"{creature.revert()}"
+                )
         except Exception as e:
-            raise ex2.error_sys.AgressiveStrategyError(self) from e
+            raise ex2.error_sys.AgressiveStrategyError(creature) from e
+
+    def is_valid(self, creature: Creature) -> bool:
+        return isinstance(creature, TransformCapability)
 
 
 class DefensiveStrategy(BattleStrategy):
-    def act(self) -> None:
-        if self.is_valid():
-            self.attack()
-            self.heal()
+    def is_valid(self, creature: Creature) -> bool:
+        return isinstance(creature, HealCapability)
 
-    def is_valid(self) -> bool:
+    def act(self, creature: Creature) -> str:
         try:
-            if isinstance(self, HealCapability()):
-                return True
+            if self.is_valid(creature):
+                return (
+                    f"{creature.attack()}\n",
+                    f"{creature.heal(creature)}"
+                )
         except Exception as e:
-            raise ex2.error_sys.DefensiveStrategyError(self) from e
+            raise ex2.error_sys.DefensiveStrategyError(creature) from e
