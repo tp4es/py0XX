@@ -128,9 +128,8 @@ class DataStream():
                         f"DATA: {data}, ingested as {type(proc).__name__}")
                     break
             if not processed:
-                print(
-                    f"Has no processor avaible for {
-                        (type(data).__name__).capitalize()}")
+                print(f"Has no processor avaible for "
+                      f"{(type(data).__name__).capitalize()}")
 
     def print_processors_stats(self) -> None:
         for processor in self._processors:

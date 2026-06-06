@@ -9,7 +9,8 @@ class GamingError(Exception):
 class ArgumentsCountError(GamingError):
     def __init__(
             self,
-            msg="¡¡¡ Insuficient arguments provided, +2 scores required. !!!"):
+            msg: str = "¡Insuficient arguments provided, +2 scores required.!"
+            ) -> None:
         self.msg = msg
         super().__init__(msg)
 
@@ -17,24 +18,25 @@ class ArgumentsCountError(GamingError):
 class ArgumentsNonNumeric(GamingError):
     def __init__(
             self,
-            msg="¡¡¡ Incorrect Arguments INPUT, Type INT required. !!!"):
+            msg: str = "¡¡¡ Incorrect Arguments INPUT, Type INT required. !!!"
+            ) -> None:
         self.msg = msg
         super().__init__(msg)
 
 
-def count_arguments(lenght: int):
+def count_arguments(lenght: int) -> None:
     if lenght < 2:
         raise ArgumentsCountError
 
 
-def check_arguments(arg):
+def check_arguments(arg: str) -> int:
     try:
         return int(arg)
     except Exception as e:
         raise ArgumentsNonNumeric from e
 
 
-def ft_score_analytics():
+def ft_score_analytics() -> None:
     lenght: int = len(sys.argv)
     my_list = list()
     error_list = list()
@@ -55,9 +57,8 @@ def ft_score_analytics():
         print(f"High Score = *** ¡{max(my_list)}! ***")
         print(f"Average Score = *** {int(sum(my_list) / (lenght - 1))} ***")
         print(f"Low Score = __{min(my_list)}__")
-        print(
-            f"Range from MIN to MAX Score: *** {
-                int(max(my_list) - min(my_list))} ***")
+        print(f"Range from MIN to MAX Score: *** "
+              f"{int(max(my_list) - min(my_list))} ***")
     if len(error_list) >= 1:
         print(f"Errors log: {error_list}")
 

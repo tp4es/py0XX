@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 class Plants:
-    def __init__(self, name: str, height: int):
+    def __init__(self, name: str, height: int) -> None:
         self.name = name
         self.height = height
 
@@ -11,32 +11,32 @@ class GardenError(Exception):
 
 
 class PlantError (GardenError):
-    def __init__(self, msg="Default PlantError!!!"):
+    def __init__(self, msg: str = "Default PlantError!!!") -> None:
         self.msg = msg
         super().__init__(msg)
 
 
 class WaterError (GardenError):
-    def __init__(self, msg="Default WaterError!!!"):
+    def __init__(self, msg: str = "Default WaterError!!!") -> None:
         self.msg = msg
         super().__init__(msg)
 
 
-def plant_error_test(input):
+def plant_error_test(input: str) -> int:
     try:
         return int(input)
     except Exception:
         raise PlantError
 
 
-def water_error_test(input):
+def water_error_test(input: str) -> int:
     try:
         return int(input)
     except Exception:
         raise WaterError
 
 
-def ft_custom_errors():
+def ft_custom_errors() -> None:
     print("=== Testing Self ErrorHandler")
     print("Testing PlantError...")
     try:

@@ -2,7 +2,7 @@
 import sys
 
 
-def ft_command_quest():
+def ft_command_quest() -> None:
     lenght: int = len(sys.argv)
     sys_list = sys.argv
     if lenght < 1:

@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-import sys
-
 
 def secure_archive(file, mode="r", content=None) -> tuple[bool, str]:
     try:

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sys
 
+
 def ft_ancient_text():
     if len(sys.argv) != 2:
         print("Uage: ft_ancient_text.py <file>")

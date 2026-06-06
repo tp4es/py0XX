@@ -6,5 +6,5 @@ def ft_seed_inventory(seed_type: str, quantity: int, unit: str) -> None:
     if unit not in units:
         print("Unknown unit type")
         return
-    print((f"{seed_type.capitalize()} seeds: {quantity} {unit}{
-        unit_format[units.index(unit)]}."))
+    print((f"{seed_type.capitalize()} seeds: "
+           f"{quantity} {unit}{unit_format[units.index(unit)]}."))

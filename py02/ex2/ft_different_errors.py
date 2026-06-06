@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-def garden_operations(operation_number):
+def garden_operations(operation_number: int) -> None:
     if operation_number == 0:
         int("abc")
     elif operation_number == 1:
@@ -13,7 +13,7 @@ def garden_operations(operation_number):
         return
 
 
-def test_error_types():
+def test_error_types() -> None:
     for i in range(5):
         print(f"Trying operation {i}")
         try:
@@ -31,7 +31,7 @@ def test_error_types():
     print("Program still running...")
 
 
-def ft_different_errors():
+def ft_different_errors() -> None:
     test_error_types()
 
 

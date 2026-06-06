@@ -2,7 +2,7 @@
 from alchemy.elements import create_air, create_earth
 from elements import create_water, create_fire
 
-elements = []
+elements: list = []
 
 
 def healing_potion() -> str:

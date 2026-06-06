@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-def input_temperature(temp_str):
+def input_temperature(temp_str: str) -> int:
     return int(temp_str)
 
 
-def test_temperature():
+def test_temperature() -> None:
     print("=== Test 1: Valid input ===")
     try:
         temp = input_temperature("25")
@@ -22,7 +22,7 @@ def test_temperature():
     print("\nProgram continues running...")
 
 
-def ft_first_exception():
+def ft_first_exception() -> None:
     test_temperature()
 
 

@@ -6,7 +6,8 @@ import ex2.error_sys
 
 class BattleStrategy(ABC):
     @abstractmethod
-    def act(self, creature: Creature) -> str:
+    def act(self, creature: Creature | TransformCapability | HealCapability
+            ) -> None:
         pass
 
     @abstractmethod
@@ -15,19 +16,22 @@ class BattleStrategy(ABC):
 
 
 class NormalStrategy(BattleStrategy):
-    def act(self, creature: Creature) -> str:
-        if self.is_valid(creature):
-            return creature.attack()
+    def act(self, creature: Creature) -> None:
+        try:
+            if self.is_valid(creature):
+                print(creature.attack())
+        except Exception as e:
+            raise ex2.error_sys.CreatureStrategyError(creature) from e
 
     def is_valid(self, creature: Creature) -> bool:
         return isinstance(creature, Creature)
 
 
 class AggresiveStrategy(BattleStrategy):
-    def act(self, creature: Creature) -> str:
+    def act(self, creature: TransformCapability) -> None:
         try:
             if self.is_valid(creature):
-                return (
+                print(
                     f"{creature.transform()}\n",
                     f"{creature.attack()}\n",
                     f"{creature.revert()}"
@@ -43,10 +47,10 @@ class DefensiveStrategy(BattleStrategy):
     def is_valid(self, creature: Creature) -> bool:
         return isinstance(creature, HealCapability)
 
-    def act(self, creature: Creature) -> str:
+    def act(self, creature: Creature) -> None:
         try:
             if self.is_valid(creature):
-                return (
+                print(
                     f"{creature.attack()}\n",
                     f"{creature.heal(creature)}"
                 )

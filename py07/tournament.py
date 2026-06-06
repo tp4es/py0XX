@@ -45,8 +45,8 @@ def tournament() -> None:
                 print(cards[i][0].describe())
                 print("VS.")
                 print(cards[j][0].describe())
-                print(*cards[i][1].act(cards[i][0]))
-                print(*cards[j][1].act(cards[j][0]))
+                cards[i][1].act(cards[i][0])
+                cards[j][1].act(cards[j][0])
             except Exception as e:
                 print(f"Error: {e}")
 

@@ -30,6 +30,7 @@ def transformed_file(file):
             line = line.rstrip("\n") + "#\n"
             nlines.append(line)
             print(line)
+        nfile_name = input("\nEnter new file name (or empty): ").strip()
         if nfile_name:
             wf = open(nfile_name, "w")
             wf.writelines(nlines)
