@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from ex0 import FlameFactory, AquaFactory, CreatureFactory
+from typing import cast
 
 
 def ft_factory(factory: CreatureFactory) -> None:
@@ -18,11 +19,11 @@ def ft_factory(factory: CreatureFactory) -> None:
         print(f"Caught Error: {e}")
 
 
-def ft_battle(creature1: CreatureFactory, creature2: CreatureFactory) -> None:
+def ft_battle(factory1: CreatureFactory, factory2: CreatureFactory) -> None:
     print("=== TESTING Battle ===")
     try:
-        creature1 = creature1.create_base()
-        creature2 = creature2.create_base()
+        creature1 = factory1.create_base()
+        creature2 = factory2.create_base()
         print(creature1.describe())
         print("VS.")
         print(creature2.describe())

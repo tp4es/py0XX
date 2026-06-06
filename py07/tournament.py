@@ -5,10 +5,11 @@ from ex1.capability import HealCapability, TransformCapability
 from ex2.rules import NormalStrategy, AggresiveStrategy, DefensiveStrategy
 from ex2.rules import BattleStrategy
 
-cards = []
+cards: list[tuple[Creature, BattleStrategy]] = []
 factories = [
-    AquaFactory, FlameFactory, HealingCreatureFactory,
-    TransformCreatureFactory]
+    AquaFactory(), FlameFactory(),
+    HealingCreatureFactory(), TransformCreatureFactory()
+]
 
 
 def strategy_match(creature: Creature) -> BattleStrategy:
@@ -20,12 +21,12 @@ def strategy_match(creature: Creature) -> BattleStrategy:
         return NormalStrategy()
 
 
-def create() -> tuple:
+def create() -> None:
     try:
         for factory in factories:
-            base = factory.create_base(None)
+            base = factory.create_base()
             strategy_base = strategy_match(base)
-            evolved = factory.create_evolved(None)
+            evolved = factory.create_evolved()
             strategy_evolved = strategy_match(evolved)
             try:
                 cards.append((base, strategy_base))
