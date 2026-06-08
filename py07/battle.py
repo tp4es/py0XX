@@ -1,50 +1,28 @@
 #!/usr/bin/env python3
 
-from ex0 import FlameFactory, AquaFactory
-import random
+from ex0 import FlameFactory, AquaFactory, CreatureFactory
 
 
-creatures_list = []
-
-
-def flame_factory() -> None:
-    print("=== TESTING FIRE ===")
+def ft_factory(factory: CreatureFactory) -> None:
+    print("=== TESTING FACTORY ===")
     try:
-        charmander = FlameFactory.create_base(None, name="charmander")
-        if charmander:
-            print(charmander.describe())
-            print(f"{charmander.attack()}")
-            creatures_list.append(charmander)
-        charizard = FlameFactory.create_evolved(None, name="Charizard")
-        if charizard:
-            print(charizard.describe())
-            print(charizard.attack())
-            creatures_list.append(charizard)
+        base_creature = factory.create_base()
+        if base_creature:
+            print(base_creature.describe())
+            print(f"{base_creature.attack()}")
+        evolved_creature = factory.create_evolved()
+        if evolved_creature:
+            print(evolved_creature.describe())
+            print(evolved_creature.attack())
     except Exception as e:
         print(f"Caught Error: {e}")
 
 
-def aqua_factory() -> None:
-    print("=== TESTING AQUA ===")
-    try:
-        squartle = AquaFactory.create_base(None, name="squartle")
-        if squartle:
-            print(squartle.describe())
-            print(f"{squartle.attack()}")
-            creatures_list.append(squartle)
-        blastoise = AquaFactory.create_evolved(None, name="blastoise")
-        if blastoise:
-            print(blastoise.describe())
-            print(blastoise.attack())
-            creatures_list.append(blastoise)
-    except Exception as e:
-        print(f"Caught Error: {e}")
-
-
-def ft_battle():
+def ft_battle(factory1: CreatureFactory, factory2: CreatureFactory) -> None:
     print("=== TESTING Battle ===")
     try:
-        creature1, creature2 = random.sample(creatures_list, 2)
+        creature1 = factory1.create_base()
+        creature2 = factory2.create_base()
         print(creature1.describe())
         print("VS.")
         print(creature2.describe())
@@ -55,6 +33,6 @@ def ft_battle():
 
 
 if __name__ == "__main__":
-    flame_factory()
-    aqua_factory()
-    ft_battle()
+    ft_factory(FlameFactory())
+    ft_factory(AquaFactory())
+    ft_battle(FlameFactory(), AquaFactory())

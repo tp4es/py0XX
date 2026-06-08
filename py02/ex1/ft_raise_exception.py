@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-def input_temperature(temp: str):
+def input_temperature(temp: str) -> int:
     try:
         n = int(temp)
     except ValueError:
@@ -12,7 +12,7 @@ def input_temperature(temp: str):
     return n
 
 
-def test_temperature():
+def test_temperature() -> None:
     value1: str = "30"
     value2: str = "30a"
     value3: str = "-100"
@@ -31,7 +31,7 @@ def test_temperature():
     print("Program continues running...")
 
 
-def ft_raise_exception():
+def ft_raise_exception() -> None:
     test_temperature()
 
 

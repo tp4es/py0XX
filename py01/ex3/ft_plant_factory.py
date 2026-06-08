@@ -1,18 +1,21 @@
 #!/usr/bin/env python3
 
 class Plants:
-    def __init__(self, name: str = "default", height: int = 0, age: int = 0):
+    def __init__(
+            self, name: str = "default",
+            height: int = 0,
+            age: int = 0) -> None:
         self.name = name
         self.height = height
         self.age = age
 
-    def show(self):
+    def show(self) -> None:
         print(
-            f"{self.name.capitalize()}: {
-                int(self.height)}cm, {int(self.age)} days old.\n")
+            f"{self.name.capitalize()}: "
+            f"{int(self.height)}cm, {int(self.age)} days old.\n")
 
 
-def ft_plant_factory():
+def ft_plant_factory() -> None:
     plant1 = Plants("rose", 25, 30)
     plant2 = Plants("sunflower", 80, 45)
     plant3 = Plants("cactus", 15, 120)

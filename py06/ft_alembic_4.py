@@ -3,13 +3,13 @@
 import alchemy
 
 
-def main():
+def main() -> None:
     print("=== Alembic Test ===")
     try:
         print("Creating Air Element:")
         print(alchemy.create_air())
         print("\nCreating Earth Element:")
-        element = alchemy.create_earth()
+        element: str = alchemy.create_earth()
         print(element)
     except AttributeError as e:
         print(f"Error occurred: {e}")

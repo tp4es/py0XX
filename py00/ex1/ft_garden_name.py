@@ -1,6 +1,4 @@
-name = input("Enter garden name: ")
-
-
-def ft_garden_name():
+def ft_garden_name() -> None:
+    name = input("Enter garden name: ")
     print("Garden: " + name)
-    print("Status: registered!!!")
+    print("Status: Growing Well!")

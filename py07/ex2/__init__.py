@@ -1,3 +1,3 @@
 from .rules import AggresiveStrategy, DefensiveStrategy, NormalStrategy
 
-__all__ = ["Aggresive", "Defensive", "Normal"]
+__all__ = ["AggresiveStrategy", "DefensiveStrategy", "NormalStrategy"]

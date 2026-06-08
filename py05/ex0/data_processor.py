@@ -6,9 +6,9 @@ from typing import Any
 
 class DataProcessor(ABC):
 
-    def __init__(self):
-        self._data = list()
-        self._counter = 0
+    def __init__(self) -> None:
+        self._data: list[str] = list()
+        self._counter: int = 0
 
     @abstractmethod
     def validate(self, data: Any) -> bool:
@@ -22,7 +22,7 @@ class DataProcessor(ABC):
         if not self._data:
             raise ValueError("No hay datos")
         self._counter += 1
-        value = self._data.pop(0)
+        value: Any = self._data.pop(0)
         return (self._counter, value)
 
 
@@ -68,7 +68,7 @@ class TextProcessor(DataProcessor):
 class LogProcessor(DataProcessor):
 
     def validate(self, data: Any) -> bool:
-        def is_valid_dict(d):
+        def is_valid_dict(d: Any) -> bool:
             return isinstance(d, dict) and all(
                 isinstance(k, str) and isinstance(v, str)
                 for k, v in d.items()
@@ -91,12 +91,12 @@ class LogProcessor(DataProcessor):
             self._data.append(str(data))
 
 
-def function_test(obj: DataProcessor, list: list) -> None:
+def function_test(obj: DataProcessor, list: list[Any]) -> None:
     print(f"\nStart Testing {type(obj).__name__}")
     for data in list:
         try:
-            print(f"Trying to ingest Data: {
-                data}, Valide DATA: {obj.validate(data)}")
+            print(f"Trying to ingest Data: {data}, "
+                  f"Valide DATA: {obj.validate(data)}")
             obj.ingest(data)
         except Exception as e:
             print(f"Error: {e}")
@@ -106,7 +106,7 @@ def function_test(obj: DataProcessor, list: list) -> None:
         print(obj.output())
 
 
-def data_processor():
+def data_processor() -> None:
     data_list = [1.01, 2.02, [3.03, 4], "hello",
                  ["hello", "world"], {"dict": "value"}]
     numeric = NumericProcessor()

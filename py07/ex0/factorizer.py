@@ -4,11 +4,11 @@ from .creatures import Creature, Flameling, Pyrodon, Aquabub, Torragon
 
 class CreatureFactory(ABC):
     @abstractmethod
-    def create_base(self, name: str = "base") -> Creature:
+    def create_base(self, name: str = "") -> Creature:
         pass
 
     @abstractmethod
-    def create_evolved(self, name: str = "evolved") -> Creature:
+    def create_evolved(self, name: str = "") -> Creature:
         pass
 
 

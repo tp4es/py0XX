@@ -5,25 +5,25 @@ class GardenError(Exception):
 
 
 class PlantError (GardenError):
-    def __init__(self, msg="Default PlantError!!!"):
+    def __init__(self, msg: str = "Default PlantError!!!") -> None:
         self.msg = msg
         super().__init__(msg)
 
 
 class WaterError (GardenError):
-    def __init__(self, msg="Default WaterError!!!"):
+    def __init__(self, msg: str = "Default WaterError!!!") -> None:
         self.msg = msg
         super().__init__(msg)
 
 
-def water_plant(plant_name):
+def water_plant(plant_name: str) -> None:
     if plant_name != plant_name.capitalize():
         raise PlantError
     else:
         print(f"***  Successful watering of the plant: {plant_name}  ***")
 
 
-def test_watering_system():
+def test_watering_system() -> None:
     print("=== Starting Watering System ===")
     name_list = {"Tomato", "Lettuce", "Carrot", "invalid name", "Pumpkin"}
     try:
@@ -36,7 +36,7 @@ def test_watering_system():
         print("*** ¡Closing! ***")
 
 
-def ft_finally_block():
+def ft_finally_block() -> None:
     test_watering_system()
 
 

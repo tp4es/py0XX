@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import random
 
-players = [
+players: list[str] = [
     "scorpion",
     "sub-Zero",
     "sonya",
@@ -13,7 +13,7 @@ players = [
     "Nina Williams"]
 
 
-def ft_data_alchemist():
+def ft_data_alchemist() -> None:
     print(f"Original Names: {players}")
     new_capi = [p.title() for p in players]
     old_capi = [p for p in players if p.title() == p]

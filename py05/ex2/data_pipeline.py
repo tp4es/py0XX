@@ -6,10 +6,10 @@ from typing import Any, Protocol
 
 class DataProcessor(ABC):
 
-    def __init__(self):
-        self._data = list()
-        self._counter = 0
-        self._ingested = 0
+    def __init__(self) -> None:
+        self._data: list[str] = []
+        self._counter: int = 0
+        self._ingested: int = 0
 
     @abstractmethod
     def validate(self, data: Any) -> bool:
@@ -23,7 +23,7 @@ class DataProcessor(ABC):
         if not self._data:
             raise ValueError("No hay datos")
         self._counter += 1
-        value = self._data.pop(0)
+        value: Any = self._data.pop(0)
         return (self._counter, value)
 
 
@@ -73,7 +73,7 @@ class TextProcessor(DataProcessor):
 class LogProcessor(DataProcessor):
 
     def validate(self, data: Any) -> bool:
-        def is_valid_dict(d):
+        def is_valid_dict(d: Any) -> bool:
             return isinstance(d, dict) and all(
                 isinstance(k, str) and isinstance(v, str)
                 for k, v in d.items()
@@ -105,10 +105,10 @@ class ExportPlugin(Protocol):
 
 
 class DataStream():
-    def __init__(self):
-        self._processors = []
+    def __init__(self) -> None:
+        self._processors: list[DataProcessor] = []
 
-    def registered_processors(self) -> list:
+    def registered_processors(self) -> list[DataProcessor]:
         return (self._processors)
 
     def register_processor(self, proc: DataProcessor) -> None:
@@ -128,9 +128,8 @@ class DataStream():
                         f"DATA: {data}, ingested as {type(proc).__name__}")
                     break
             if not processed:
-                print(
-                    f"Has no processor avaible for {
-                        (type(data).__name__).capitalize()}")
+                print(f"Has no processor avaible for "
+                      f"{(type(data).__name__).capitalize()}")
 
     def print_processors_stats(self) -> None:
         for processor in self._processors:
@@ -156,7 +155,7 @@ class DataStream():
 
 class ExportJson():
 
-    def process_output(self, data):
+    def process_output(self, data: list[tuple[int, str]]) -> None:
         result = {}
         for t in data:
             result[f"item_{t[0]}"] = t[1]
@@ -164,7 +163,7 @@ class ExportJson():
 
 
 class ExportCsv():
-    def process_output(self, data):
+    def process_output(self, data: list[tuple[int, str]]) -> None:
         result = []
         for t in data:
             result.append(f"{t[1]}")
@@ -181,7 +180,7 @@ def consume_processor(proc: DataProcessor, amount: int) -> None:
             break
 
 
-def data_pipe():
+def data_pipe() -> None:
     data_list = [1.01, 2.02, [3.03, 4], "hello", 42, 21,
                  ["hello", "world"], {"dict": "value"}, (1, 2),
                  {"Warning": "SysError"}, {"SSHConnecting": "Fail"}
