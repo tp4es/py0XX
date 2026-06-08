@@ -1,8 +1,8 @@
-from .light_validator import validate_ingredients, elements_list
+from .light_validator import validate_ingredients
 
 
 def light_spell_allowed_ingredients() -> list:
-    return (elements_list)
+    return (['earth', 'air', 'fire', 'water'])
 
 
 def light_spell_record(spell_name: str, ingredients: str):
