@@ -47,20 +47,6 @@ def transformed_file(file: str) -> None:
         sys.stderr.write(f"Error_DirectoryName: {e}")
     except Exception as e:
         sys.stderr.write(f"UndefinedError: {e}")
-    try:
-        print("Enter new file name (or empty):")
-        nfile_name = sys.stdin.readline().rstrip("\n")
-        print(nfile_name)
-        if nfile_name:
-            wf = open(nfile_name, "w")
-            wf.writelines(nlines)
-            print(f"Saving DATA to '{nfile_name}'")
-            wf.close()
-            print(f"DATA saved to {nfile_name}")
-    except PermissionError as e:
-        sys.stderr.write(f"Error_PermisionDenied: {e}")
-    except Exception as e:
-        sys.stderr.write(f"UndefinedError: {e}")
 
 
 def ft_stream_management() -> None:
