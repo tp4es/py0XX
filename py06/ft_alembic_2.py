@@ -3,8 +3,8 @@
 from alchemy.elements import create_earth
 
 
-def main():
-    earth = create_earth()
+def main() -> None:
+    earth: str = create_earth()
     print(earth)
 
 

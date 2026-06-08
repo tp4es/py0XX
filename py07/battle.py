@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from ex0 import FlameFactory, AquaFactory, CreatureFactory
-from typing import cast
 
 
 def ft_factory(factory: CreatureFactory) -> None:

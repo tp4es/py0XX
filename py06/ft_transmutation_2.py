@@ -2,9 +2,9 @@
 import alchemy.transmutation.recipes
 
 
-def ft_transmutation():
+def ft_transmutation() -> None:
     try:
-        transmutation = alchemy.transmutation.recipes.lead_to_gold()
+        transmutation: str = alchemy.transmutation.recipes.lead_to_gold()
         print(transmutation)
     except Exception as e:
         print(f"Error found: {e}")

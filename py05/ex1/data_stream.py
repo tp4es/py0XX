@@ -6,10 +6,10 @@ from typing import Any
 
 class DataProcessor(ABC):
 
-    def __init__(self):
-        self._data = list()
-        self._counter = 0
-        self._ingested = 0
+    def __init__(self) -> None:
+        self._data: list[str] = []
+        self._counter: int = 0
+        self._ingested: int = 0
 
     @abstractmethod
     def validate(self, data: Any) -> bool:
@@ -23,7 +23,7 @@ class DataProcessor(ABC):
         if not self._data:
             raise ValueError("No hay datos")
         self._counter += 1
-        value = self._data.pop(0)
+        value: Any = self._data.pop(0)
         return (self._counter, value)
 
 
@@ -73,7 +73,7 @@ class TextProcessor(DataProcessor):
 class LogProcessor(DataProcessor):
 
     def validate(self, data: Any) -> bool:
-        def is_valid_dict(d):
+        def is_valid_dict(d: Any) -> bool:
             return isinstance(d, dict) and all(
                 isinstance(k, str) and isinstance(v, str)
                 for k, v in d.items()
@@ -99,10 +99,10 @@ class LogProcessor(DataProcessor):
 
 
 class DataStream():
-    def __init__(self):
-        self._processors = []
+    def __init__(self) -> None:
+        self._processors: list[DataProcessor] = []
 
-    def registered_processors(self) -> list:
+    def registered_processors(self) -> list[DataProcessor]:
         return (self._processors)
 
     def register_processor(self, proc: DataProcessor) -> None:
@@ -113,7 +113,7 @@ class DataStream():
 
     def process_stream(self, stream: list[Any]) -> None:
         for data in stream:
-            processed = False
+            processed: bool = False
             for proc in self._processors:
                 if proc.validate(data):
                     proc.ingest(data)
@@ -144,7 +144,7 @@ def consume_processor(proc: DataProcessor, amount: int) -> None:
             break
 
 
-def data_stream():
+def data_stream() -> None:
     data_list = [1.01, 2.02, [3.03, 4], "hello",
                  ["hello", "world"], {"dict": "value"}, (1, 2)]
 

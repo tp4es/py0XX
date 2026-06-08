@@ -3,7 +3,7 @@
 import sys
 
 
-def original_file(file):
+def original_file(file: str) -> None:
     try:
         print("=== Start ===\n")
         f = open(file, "r")
@@ -19,7 +19,7 @@ def original_file(file):
         sys.stderr.write(f"UndefinedError: {e}")
 
 
-def transformed_file(file):
+def transformed_file(file: str) -> None:
     try:
         print("\n=== Transform DATA ===\n")
         f = open(file, "r")
@@ -63,7 +63,7 @@ def transformed_file(file):
         sys.stderr.write(f"UndefinedError: {e}")
 
 
-def ft_stream_management():
+def ft_stream_management() -> None:
     if len(sys.argv) != 2:
         print("Usage: ft_ancient_text.py <file>")
         return

@@ -2,9 +2,9 @@
 import sys
 
 
-def ft_ancient_text():
+def ft_ancient_text() -> None:
     if len(sys.argv) != 2:
-        print("Uage: ft_ancient_text.py <file>")
+        print("Usage: ft_ancient_text.py <file>")
         return
     file = sys.argv[1]
     try:

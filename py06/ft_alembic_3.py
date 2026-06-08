@@ -3,8 +3,8 @@
 from alchemy.elements import create_air
 
 
-def main():
-    element = create_air()
+def main() -> None:
+    element: str = create_air()
     print(element)
 
 

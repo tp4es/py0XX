@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
+import typing
 
 
-def secure_archive(file, mode="r", content=None) -> tuple[bool, str]:
+def secure_archive(file: str, mode: str = "r", content: typing.Any = None
+                   ) -> tuple[bool, str]:
     try:
         if mode == "r":
             with open(file, mode) as f:
@@ -17,7 +19,7 @@ def secure_archive(file, mode="r", content=None) -> tuple[bool, str]:
         return (False, str(e))
 
 
-def ft_vault_security():
+def ft_vault_security() -> None:
     print("=== Cyber Archives Security ===")
     print("\nUsing 'secure_archive' to read from a nonexistent file:")
     print(secure_archive("not_existing_file"))
@@ -27,7 +29,10 @@ def ft_vault_security():
     ok, data = secure_archive("../ancient_fragment.txt")
     print((ok, data))
     print("\nUsing 'secure_archive' to write previous content to a new file:")
-    print(secure_archive("copy.txt", "w", data if ok else ""))
+    if ok:
+        print(secure_archive("copy.txt", "w", data))
+    else:
+        print("Skipping write operation due to read error.")
 
 
 if __name__ == "__main__":
