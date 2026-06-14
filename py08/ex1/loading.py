@@ -21,7 +21,7 @@ def check_deps(deps: list[str]) -> list[dict[str, str], str]:
 
 
 def matrix_gen(module: importlib):
-    print("Generating DATA for Matrix")
+    print("Generating DATA for Matrix!")
     samples = module.arange(1000)
 
     signal = (
@@ -33,6 +33,7 @@ def matrix_gen(module: importlib):
 
 
 def matrix_graf(module: importlib, samples, signal) -> None:
+    print("Analizing DATA in Matrix!")
     graf = module.DataFrame({
         "sample": samples,
         "signal": signal
@@ -41,7 +42,10 @@ def matrix_graf(module: importlib, samples, signal) -> None:
 
 
 def matrix_map(module: importlib, graf):
-    pass
+    print("Generating Visual.")
+    """
+    module.pyplot.plot(df["sample"], df["signal"])
+    module.pyplot.savefig("matrix_analysis.png")"""
 
 
 def main() -> None:
@@ -54,17 +58,21 @@ def main() -> None:
         try:
             modules: list = check_deps(requirement)
             if modules:
+                charged: int = 0
                 for module in modules[0]:
                     if module.get("numpy"):
-                        numpy: bool = True
-                        samples, signal = matrix_gen(module.get("numpy"))
-                    if module.get("pandas") and signal:
-                        pandas: bool = True
-                        frame = matrix_map(module.get(
-                            "pandas"), samples, signal)
+                        numpy: importlib = module.get("numpy")
+                        charged += 1
+                    if module.get("pandas"):
+                        pandas: importlib = module.get("pandas")
+                        charged += 1
                     if module.get("matplotlib"):
-                        matplotlib: bool = True
-
+                        matplotlib: importlib = module.get("matplotlib")
+                        charged += 1
+                if charged >= 3:
+                    samples, signal = matrix_gen(numpy)
+                    frame = matrix_graf(pandas, samples, signal)
+                    matrix_map(matplotlib, frame)
         except Exception as e:
             print(f"Error caught: {e}")
     except Exception as e:
