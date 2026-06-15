@@ -7,9 +7,14 @@ def check_deps(deps: list[str]) -> list[dict[str, str], str]:
     missing = []
     for dep in deps:
         try:
-            module = importlib.import_module(dep)
-            dependencie: dict = {module.__name__: module}
-            ok.append(dependencie)
+            if dep != "matplotlib":
+                module = importlib.import_module(dep)
+                dependencie: dict = {module.__name__: module}
+                ok.append(dependencie)
+            else:
+                pyplot = importlib.import_module("matplotlib.pyplot")
+                dependencie: dict = {"matplotlib": pyplot}
+                ok.append(dependencie)
             print(f"[OK] {dep.capitalize()} ({module.__version__})")
         except ImportError:
             print(f"{dep.capitalize()} module NOT FOUND.")
@@ -23,7 +28,6 @@ def check_deps(deps: list[str]) -> list[dict[str, str], str]:
 def matrix_gen(module: importlib):
     print("Generating DATA for Matrix!")
     samples = module.arange(1000)
-
     signal = (
         50
         + 10 * module.sin(samples / 50)
@@ -41,11 +45,10 @@ def matrix_graf(module: importlib, samples, signal) -> None:
     return (graf)
 
 
-def matrix_map(module: importlib, graf):
-    print("Generating Visual.")
-    """
-    module.pyplot.plot(df["sample"], df["signal"])
-    module.pyplot.savefig("matrix_analysis.png")"""
+def matrix_map(module: importlib, graf) -> None:
+    print("Generating Visualization!")
+    module.plot(graf["sample"], graf["signal"])
+    module.savefig("matrix_analysis.png")
 
 
 def main() -> None:
@@ -70,6 +73,7 @@ def main() -> None:
                         matplotlib: importlib = module.get("matplotlib")
                         charged += 1
                 if charged >= 3:
+                    print("Requierements: Ok")
                     samples, signal = matrix_gen(numpy)
                     frame = matrix_graf(pandas, samples, signal)
                     matrix_map(matplotlib, frame)
