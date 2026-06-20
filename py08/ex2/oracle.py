@@ -26,18 +26,15 @@ def load_env() -> tuple[bool, list[tuple[str, str]]]:
 
 
 def get_override() -> bool:
-    override: bool = False
     if len(sys.argv) > 1:
         for i in range(1, len(sys.argv)):
             try:
                 data: tuple = (sys.argv[i].split("=", 1))
                 os.environ[data[0]] = data[1]
-                print(data[0])
-                print(data[1])
             except Exception as e:
                 print(f"Error split: {e}")
-        override = True
-    return (override)
+        return (True)
+    return (False)
 
 
 def check_security() -> list[str]:
@@ -46,15 +43,15 @@ def check_security() -> list[str]:
     info: list = []
     try:
         if os.path.exists(path_git):
-            git: str = print("[OK] No hardcoded secrets detected.")
+            git: str = ("[OK] No hardcoded secrets detected.")
         else:
-            git: str = print("[CAUTION] File '.gitignore' not found.")
+            git: str = ("[CAUTION] File '.gitignore' not found.")
         if os.path.exists(path_env):
-            env: str = print("[OK] File '.env' properly configured.")
+            env: str = ("[OK] File '.env' properly configured.")
         else:
-            env: str = print("[CAUTION] File '.env.' not found.")
-        if get_override():
-            print("[OK] Production overrides activated.")
+            env: str = ("[CAUTION] File '.env.' not found.")
+        if get_override() == True:
+            info.append("[OK] Production overrides activated.")
         info.append(git)
         info.append(env)
         return (info)
