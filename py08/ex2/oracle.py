@@ -1,5 +1,4 @@
 import os
-import sys
 
 
 env_keys = [
@@ -11,7 +10,8 @@ env_keys = [
 ]
 
 
-def load_env() -> tuple[bool, list[tuple[str, str]], bool]:
+def load_env() -> tuple[bool, list[tuple[str, str | None]], bool]:
+    env = []
     try:
         import dotenv as de  # type: ignore
 
@@ -22,14 +22,13 @@ def load_env() -> tuple[bool, list[tuple[str, str]], bool]:
                 override = True
                 break
         de.load_dotenv()
-        env = []
         for key in env_keys:
             env.append((key, os.getenv(key)))
         return (True, env, override)
     except Exception:
         print("Error: 'python-dotenv' package is missing.")
         print("Install: pip install python-dotenv")
-        return (False, [], False)
+        return (False, env, False)
 
 
 def check_security(

@@ -1,18 +1,20 @@
 import importlib
+from typing import Any
 
 
-def check_deps(deps: list[str]) -> list[dict[str, str], str]:
+def check_deps(deps: list[str]) -> tuple[list[dict[Any, Any]], list[str]]:
     ok = []
     missing = []
+    dependencie: dict = {}
     for dep in deps:
         try:
             if dep != "matplotlib":
                 module = importlib.import_module(dep)
-                dependencie: dict = {module.__name__: module}
+                dependencie = {module.__name__: module}
                 ok.append(dependencie)
             else:
                 pyplot = importlib.import_module("matplotlib.pyplot")
-                dependencie: dict = {"matplotlib": pyplot}
+                dependencie = {"matplotlib": pyplot}
                 ok.append(dependencie)
             print(f"[OK] {dep.capitalize()} ({module.__version__})")
         except ImportError:
@@ -24,7 +26,7 @@ def check_deps(deps: list[str]) -> list[dict[str, str], str]:
     return (ok, missing)
 
 
-def matrix_gen(module: importlib):
+def matrix_gen(module: importlib):  # type: ignore
     print("Generating DATA for Matrix!")
     samples = module.arange(1000)
     signal = (
