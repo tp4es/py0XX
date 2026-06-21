@@ -2,61 +2,66 @@ import os
 import sys
 
 
-def load_env() -> tuple[bool, list[tuple[str, str]]]:
+env_keys = [
+    "MATRIX_MODE",
+    "DATABASE_URL",
+    "API_KEY",
+    "LOG_LEVEL",
+    "ZION_ENDPOINT"
+]
 
+
+def load_env() -> tuple[bool, list[tuple[str, str]], bool]:
     try:
         import dotenv as de  # type: ignore
+
+        override = False
+
+        for key in env_keys:
+            if os.getenv(key) is not None:
+                override = True
+                break
         de.load_dotenv()
-        env: list = []
-        mode: tuple = ("mode", os.getenv("MATRIX_MODE"))
-        db: tuple = ("db", os.getenv("DATABASE_URL"))
-        api_key: tuple = ("api_key", os.getenv("API_KEY"))
-        log_level: tuple = ("log_level", os.getenv("LOG_LEVEL"))
-        zion_edp: tuple = ("zion_edp", os.getenv("ZION_ENDPOINT"))
-        env.append(mode)
-        env.append(db)
-        env.append(api_key)
-        env.append(log_level)
-        env.append(zion_edp)
-        return (True, env)
+        env = []
+        for key in env_keys:
+            env.append((key, os.getenv(key)))
+        return (True, env, override)
     except Exception:
         print("Error: 'python-dotenv' package is missing.")
         print("Install: pip install python-dotenv")
-        return (False, None)
+        return (False, [], False)
 
 
-def get_override() -> bool:
-    if len(sys.argv) > 1:
-        for i in range(1, len(sys.argv)):
-            try:
-                data: tuple = (sys.argv[i].split("=", 1))
-                os.environ[data[0]] = data[1]
-            except Exception as e:
-                print(f"Error split: {e}")
-        return (True)
-    return (False)
-
-
-def check_security() -> list[str]:
+def check_security(
+    loaded: tuple[bool, list[tuple[str, str]], bool]
+) -> list[str]:
     path_git = ".gitignore"
     path_env = ".env"
-    info: list = []
+    info = []
     try:
         if os.path.exists(path_git):
-            git: str = ("[OK] No hardcoded secrets detected.")
+            info.append("[OK] No hardcoded secrets detected.")
         else:
-            git: str = ("[CAUTION] File '.gitignore' not found.")
-        if os.path.exists(path_env):
-            env: str = ("[OK] File '.env' properly configured.")
+            info.append("[CAUTION] File '.gitignore' not found.")
+        if not os.path.exists(path_env):
+            info.append("[CAUTION] File '.env' not found.")
         else:
-            env: str = ("[CAUTION] File '.env.' not found.")
-        if get_override() == True:
+            missing = []
+            for key, value in loaded[1]:
+                if value is None or value == "":
+                    missing.append(key)
+            if len(missing) == 0:
+                info.append("[OK] File '.env' properly configured.")
+            else:
+                info.append(
+                    "[CAUTION] Missing keys: "
+                    + ", ".join(missing)
+                )
+        if loaded[2]:
             info.append("[OK] Production overrides activated.")
-        info.append(git)
-        info.append(env)
-        return (info)
+        return info
     except Exception as e:
-        return (f"Erro caught_security check: {e}")
+        return [f"Error caught_security check: {e}"]
 
 
 def main():
@@ -65,12 +70,12 @@ def main():
         loaded = load_env()
         if loaded[0]:
             print("Configuration loaded:")
-            for a in loaded[1]:
-                print(f"{a[0].upper()}: {a[1].capitalize()}")
-        print("\nEnviroment security check:")
-        info = check_security()
-        for a in info:
-            print(a)
+            for key, value in loaded[1]:
+                print(f"{key}: {value}")
+        print("\nEnvironment security check:")
+        info = check_security(loaded)
+        for line in info:
+            print(line)
     except Exception as e:
         print(f"Error caught: {e}")
 
