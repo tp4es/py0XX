@@ -7,11 +7,11 @@ class Creature(ABC):
         self._creature_type = creature_type
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self._name.capitalize()
 
     @property
-    def creature_type(self):
+    def creature_type(self) -> str:
         return self._creature_type
 
     def describe(self) -> str:

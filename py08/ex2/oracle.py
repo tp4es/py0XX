@@ -63,7 +63,7 @@ def check_security(
         return [f"Error caught_security check: {e}"]
 
 
-def main():
+def main() -> None:
     print("ORACLE STATUS: Reading the Matrix...\n")
     try:
         loaded = load_env()
@@ -72,7 +72,7 @@ def main():
             for key, value in loaded[1]:
                 print(f"{key}: {value}")
         print("\nEnvironment security check:")
-        info = check_security(loaded)
+        info: list = check_security(loaded)    # type: ignore
         for line in info:
             print(line)
     except Exception as e:

@@ -28,28 +28,29 @@ def check_deps(deps: list[str]) -> tuple[list[dict[Any, Any]], list[str]]:
 
 def matrix_gen(module: importlib):  # type: ignore
     print("Generating DATA for Matrix!")
-    samples = module.arange(1000)
+    samples = module.arange(1000)  # type: ignore
     signal = (
         50
-        + 10 * module.sin(samples / 50)
-        + module.random.normal(0, 2, 1000)
+        + 10 * module.sin(samples / 50)  # type: ignore
+        + module.random.normal(0, 2, 1000)  # type: ignore
     )
     return (samples, signal)
 
 
-def matrix_graf(module: importlib, samples, signal) -> None:
+def matrix_graf(
+            module: importlib, samples, signal) -> Any:  # type: ignore
     print("Analizing DATA in Matrix!")
-    graf = module.DataFrame({
+    graf = module.DataFrame({  # type: ignore
         "sample": samples,
         "signal": signal
     })
     return (graf)
 
 
-def matrix_map(module: importlib, graf) -> None:
+def matrix_map(module: importlib, graf) -> None:  # type: ignore
     print("Generating Visualization!")
-    module.plot(graf["sample"], graf["signal"])
-    module.savefig("matrix_analysis.png")
+    module.plot(graf["sample"], graf["signal"])  # type: ignore
+    module.savefig("matrix_analysis.png")  # type: ignore
 
 
 def main() -> None:
@@ -60,18 +61,22 @@ def main() -> None:
         for line in lines:
             requirement.append(line.strip(" ").strip("\n"))
         try:
-            modules: list = check_deps(requirement)
+            modules: tuple = check_deps(requirement)
             if modules:
                 charged: int = 0
                 for module in modules[0]:
                     if module.get("numpy"):
-                        numpy: importlib = module.get("numpy")
+                        numpy: importlib = module.get("numpy")  # type: ignore
                         charged += 1
                     if module.get("pandas"):
-                        pandas: importlib = module.get("pandas")
+                        pandas: importlib = (  # type: ignore
+                            module.get("pandas")
+                        )
                         charged += 1
                     if module.get("matplotlib"):
-                        matplotlib: importlib = module.get("matplotlib")
+                        matplotlib: importlib = (  # type: ignore
+                            module.get("matplotlib")
+                        )
                         charged += 1
                 if charged >= 3:
                     print("Requierements: Ok")

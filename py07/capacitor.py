@@ -11,10 +11,10 @@ def ft_factory(factory: CreatureFactory) -> None:
         print(f"Caught Error: {e}")
 
 
-def ft_healer():
+def ft_healer() -> None:
     try:
         print("=== Testing Creature Healer ===")
-        creature = HealingCreatureFactory.create_base(None)
+        creature = HealingCreatureFactory.create_base(None)  # type: ignore
         print(creature.describe())
         print(creature.attack())
         print(creature.heal(creature))
@@ -22,18 +22,20 @@ def ft_healer():
         print(f"Error Caught: {e}")
     try:
         print("=== Testing Creature Evolved Healer ===")
-        creature1 = HealingCreatureFactory.create_evolved(None)
+        creature1 = HealingCreatureFactory.create_evolved(None)  # type: ignore
         print(creature1.describe())
         print(creature1.attack())
-        print(creature1.heal(creature))
+        print(creature1.heal(creature1))
     except Exception as e:
         print(f"Error Caught: {e}")
 
 
-def ft_transformer():
+def ft_transformer() -> None:
     try:
         print("=== Testing Creature Transformer_base ===")
-        transformer = TransformCreatureFactory.create_base(None)
+        transformer = (
+            TransformCreatureFactory.create_base(None)  # type: ignore
+        )
         print(transformer.describe())
         print(transformer.attack())
         print(transformer.transform())
@@ -43,7 +45,9 @@ def ft_transformer():
         print(f"Error Caught: {e}")
     try:
         print("=== Testing Creature Transformer_Evolved ===")
-        transformer1 = TransformCreatureFactory.create_evolved(None)
+        transformer1 = (
+            TransformCreatureFactory.create_evolved(None)  # type: ignore
+        )
         print(transformer1.describe())
         print(transformer1.attack())
         print(transformer1.transform())
